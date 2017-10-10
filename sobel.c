@@ -28,7 +28,7 @@ char **argv;
         foobar = *argv;
         fp1=fopen(foobar,"rb");
 				// original sobel output as fo1
-				fo1=fopen("magOutput.pgm","wb");
+				fo1=fopen("sobelMag.pgm","wb");
 
 				fscanf(fp1, "%s", pgmType);
 				fscanf(fp1, "%d", &picLength);
@@ -41,7 +41,7 @@ char **argv;
                   pic[i][j]  &= 0377;
                 }
         }
-
+				fclose(fp1);
         mr = 1;
         for (i=mr;i<256-mr;i++)
         { for (j=mr;j<256-mr;j++)
@@ -62,14 +62,14 @@ char **argv;
              outpicy[i][j] = sum2;
           }
         }
-				// getting max
+				// Calculating the gradient magnitude for the image
         maxival = 0;
         for (i=mr;i<256-mr;i++)
         { for (j=mr;j<256-mr;j++)
           {
              ival[i][j]=sqrt((double)((outpicx[i][j]*outpicx[i][j]) +
                                       (outpicy[i][j]*outpicy[i][j])));
-             if (ival[i][j] > maxival)
+             if (ival[i][j] > maxival) // getting max value for
                 maxival = ival[i][j];
 
            }
@@ -91,11 +91,11 @@ char **argv;
 
 						}
 				}
-
-				imageToFile("xGradient.pgm", outpicx);
-				imageToFile("yGradient.pgm", outpicy);
-				imageToFile("highThreshold.pgm", highOutPic);
-				imageToFile("lowThreshold.pgm", lowOutPic);
+				fclose(fo1);
+				imageToFile("sobelXGrad.pgm", outpicx);
+				imageToFile("sobelYGrad.pgm", outpicy);
+				imageToFile("sobelHiThresh.pgm", highOutPic);
+				imageToFile("sobelLoThresh.pgm", lowOutPic);
 
 				return 0;
 } // end main
@@ -110,4 +110,5 @@ void imageToFile(char *file, int output[256][256]){
 			 fprintf(fOut,"%c", ((char)output[i][j]));
 			}
 	}
+	fclose(fOut);
 } // end imageToFile
