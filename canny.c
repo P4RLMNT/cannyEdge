@@ -9,6 +9,7 @@
 
 void imageToFile(char*, int[256][256]);
 void candidates(double image[][PICSIZE]);
+void isCand(double image[][PICSIZE]);
 
 
 int    pic[PICSIZE][PICSIZE];
@@ -122,6 +123,11 @@ imageToFile("cannyYGrad.pgm", outpicy);
 
  return 0;
 } // end main
+
+void isCand(double image[][PICSIZE])
+{
+
+}
 
 void candidates(double image[][PICSIZE])
 {
